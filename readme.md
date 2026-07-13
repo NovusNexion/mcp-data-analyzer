@@ -94,6 +94,7 @@ text
 访问 http://localhost:3000 开始使用！
 
 🧩 主要功能
+
     功能	说明
     自然语言查询	输入“查询最近一周订单量前5的城市”，自动生成 SQL 并返回结果
     多数据源切换	在 MySQL / PostgreSQL / Excel 间一键切换，底部标签同步
@@ -113,6 +114,7 @@ text
     📚 教育培训 —— 用于演示 SQL 生成、数据可视化、AI 辅助分析
 
 🛠️ 技术栈
+
     层级	技术
     前端	React 18 + Vite + Tailwind CSS + Lucide Icons
     后端	FastAPI + SQLAlchemy + Pandas + MCP (JSON-RPC)
