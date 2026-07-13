@@ -24,7 +24,7 @@ https://img.shields.io/badge/MCP-JSON--RPC-purple.svg
     📤 Excel 多文件上传 —— 支持拖拽上传、批量选择，文件自动存储至独立文件服务器，解耦可靠
 
 🏗️ 架构概览
-text
+```bash
 
 ┌─────────────────────────────────────────────────────────────┐
 │                        前端 (React)                        │
@@ -48,6 +48,7 @@ text
 │   文件服务器 (FastAPI)   │   │    大模型 API               │
 │  /upload  │  /files/*  │   │  DeepSeek / Qwen            │
 └─────────────────────────┘   └─────────────────────────────┘
+```
 ---
 
 🚀 快速开始
@@ -60,36 +61,37 @@ text
     MySQL / PostgreSQL（可选）
 
 1. 克隆项目
-
+```bash
     git clone https://github.com/your-username/mcp-data-analyzer.git
     cd mcp-data-analyzer
-
+```
 2. 启动后端
-
+```bash
     cd backend
     pip install -r requirements.txt
     cp .env.example .env  # 填写数据库连接和 API Key
     uvicorn app.main:app --reload --port 8007
-
+```
 ## 测试
 打开Fast API的 http://localhost:8007/docs查看
 
 3. 启动文件服务器
-
+```bash
     cd file_server
     pip install -r requirements.txt
     python main.py  # 默认端口 8001
-
+```
 4. 启动前端
 
 基于 **Vite** + React 构建，提供极速开发体验。
 1. Vite — 新一代前端构建工具，基于原生 ES 模块（ESM），通过预构建依赖和高效的热模块替换（HMR），实现秒级冷启动和即时更新。
 2. 界面采用 Tailwind CSS和Lucide图标，简洁美观，响应式布局，这里不使用Ant Design以保持轻量。
-
+```bash
     cd frontend
     npm install
     cp .env.example .env  # 填写 VITE_FILE_SERVER_URL
     npm run dev
+```
 
 访问 http://localhost:3000 开始使用！
 
