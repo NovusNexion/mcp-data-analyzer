@@ -1,13 +1,9 @@
-📊 MCP Data Analyzer
+📊 DataHub - 汇数、观数、析数，基于自然语言的数据库工具
 
     让数据对话像聊天一样简单 —— 基于 MCP 协议的多数据源智能分析平台
 
-https://img.shields.io/badge/Python-3.10+-blue.svg
-https://img.shields.io/badge/FastAPI-0.115-green.svg
-https://img.shields.io/badge/React-18-blue.svg
-https://img.shields.io/badge/MCP-JSON--RPC-purple.svg
 
----
+
 
 ✨ 核心亮点
 
@@ -22,7 +18,7 @@ https://img.shields.io/badge/MCP-JSON--RPC-purple.svg
     🎨 DeepSeek 风格界面 —— 深色主题、对话历史、置顶/重命名/分享/删除，体验如 AI 原生应用
 
     📤 Excel 多文件上传 —— 支持拖拽上传、批量选择，文件自动存储至独立文件服务器，解耦可靠
-
+---
 🏗️ 架构概览
 ```bash
 
