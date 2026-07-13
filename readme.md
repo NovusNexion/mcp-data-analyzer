@@ -60,41 +60,25 @@ text
     MySQL / PostgreSQL（可选）
 
 1. 克隆项目
-bash
 
-git clone https://github.com/your-username/mcp-data-analyzer.git
-cd mcp-data-analyzer
+    git clone https://github.com/your-username/mcp-data-analyzer.git
+    cd mcp-data-analyzer
 
 2. 启动后端
-bash
 
-cd backend
-pip install -r requirements.txt
-cp .env.example .env  # 填写数据库连接和 API Key
-uvicorn app.main:app --reload --port 8007
+    cd backend
+    pip install -r requirements.txt
+    cp .env.example .env  # 填写数据库连接和 API Key
+    uvicorn app.main:app --reload --port 8007
 
 ## 测试
 打开Fast API的 http://localhost:8007/docs查看
-在 Windows PowerShell 中，推荐使用 Invoke-RestMethod 并构造安全的 JSON 对象
-$body = @{
-    jsonrpc = "2.0"
-    id = 2
-    method = "tools/call"
-    params = @{
-        name = "analyze_data"
-        arguments = @{
-            question = "查询用户表中注册时间最晚的5位用户信息"
-            datasource = "mysql"
-        }
-    }
-} | ConvertTo-Json -Depth 10
 
 3. 启动文件服务器
-bash
 
-cd file_server
-pip install -r requirements.txt
-python main.py  # 默认端口 8001
+    cd file_server
+    pip install -r requirements.txt
+    python main.py  # 默认端口 8001
 
 4. 启动前端
 
@@ -102,22 +86,21 @@ python main.py  # 默认端口 8001
 1. Vite — 新一代前端构建工具，基于原生 ES 模块（ESM），通过预构建依赖和高效的热模块替换（HMR），实现秒级冷启动和即时更新。
 2. 界面采用 Tailwind CSS和Lucide图标，简洁美观，响应式布局，这里不使用Ant Design以保持轻量。
 
-```bash
-
-cd frontend
-npm install
-cp .env.example .env  # 填写 VITE_FILE_SERVER_URL
-npm run dev
+    cd frontend
+    npm install
+    cp .env.example .env  # 填写 VITE_FILE_SERVER_URL
+    npm run dev
 
 访问 http://localhost:3000 开始使用！
+
 🧩 主要功能
-功能	说明
-自然语言查询	输入“查询最近一周订单量前5的城市”，自动生成 SQL 并返回结果
-多数据源切换	在 MySQL / PostgreSQL / Excel 间一键切换，底部标签同步
-Excel 文件上传	多文件上传至文件服务器，支持 .xlsx / .xls，自动合并分析
-对话管理	历史对话置顶、重命名、分享（复制内容）、删除，自动生成标题
-数据可视化	查询结果以表格呈现，支持滚动查看，表头固定
-智能分析	大模型自动解读数据，提供洞察和建议
+    功能	说明
+    自然语言查询	输入“查询最近一周订单量前5的城市”，自动生成 SQL 并返回结果
+    多数据源切换	在 MySQL / PostgreSQL / Excel 间一键切换，底部标签同步
+    Excel 文件上传	多文件上传至文件服务器，支持 .xlsx / .xls，自动合并分析
+    对话管理	历史对话置顶、重命名、分享（复制内容）、删除，自动生成标题
+    数据可视化	查询结果以表格呈现，支持滚动查看，表头固定
+    智能分析	大模型自动解读数据，提供洞察和建议
 ---
 🎯 使用场景
 
@@ -130,10 +113,10 @@ Excel 文件上传	多文件上传至文件服务器，支持 .xlsx / .xls，自
     📚 教育培训 —— 用于演示 SQL 生成、数据可视化、AI 辅助分析
 
 🛠️ 技术栈
-层级	技术
-前端	React 18 + Vite + Tailwind CSS + Lucide Icons
-后端	FastAPI + SQLAlchemy + Pandas + MCP (JSON-RPC)
-大模型	DeepSeek API / Qwen API
-文件服务	FastAPI + multipart/form-data
-数据库	MySQL / PostgreSQL / Excel (pandas)
+    层级	技术
+    前端	React 18 + Vite + Tailwind CSS + Lucide Icons
+    后端	FastAPI + SQLAlchemy + Pandas + MCP (JSON-RPC)
+    大模型	DeepSeek API / Qwen API
+    文件服务	FastAPI + multipart/form-data
+    数据库	MySQL / PostgreSQL / Excel (pandas)
 
