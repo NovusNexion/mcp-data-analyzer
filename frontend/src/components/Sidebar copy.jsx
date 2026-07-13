@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   History, MessageSquare, Trash2, Menu, X, Pencil, Check, X as XIcon,
-  Pin, PinOff, Share2, MoreHorizontal, MessageSquarePlus, HelpCircle
+  Pin, PinOff, Share2, MoreHorizontal, MessageSquarePlus 
 } from 'lucide-react';
-import { listTools } from '../api';  // 注意路径，根据实际情况调整
 
 const Sidebar = ({ 
   isOpen, toggle, conversations, currentId, onSelect, onNew, 
@@ -14,12 +13,6 @@ const Sidebar = ({
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRefs = useRef({});
 
-  // 工具列表相关
-  const [showTools, setShowTools] = useState(false);
-  const [tools, setTools] = useState([]);
-  const [loadingTools, setLoadingTools] = useState(false);
-  const toolsPanelRef = useRef(null);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (openMenuId) {
@@ -28,14 +21,10 @@ const Sidebar = ({
           setOpenMenuId(null);
         }
       }
-      // 点击工具面板外部关闭
-      if (showTools && toolsPanelRef.current && !toolsPanelRef.current.contains(event.target)) {
-        setShowTools(false);
-      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [openMenuId, showTools]);
+  }, [openMenuId]);
 
   const handleEditStart = (id, currentTitle) => {
     setEditingId(id);
@@ -85,36 +74,6 @@ const Sidebar = ({
     }
   };
 
-  // 获取工具列表
-  const fetchTools = async () => {
-    if (tools.length > 0) {
-      setShowTools(!showTools);
-      return;
-    }
-    setLoadingTools(true);
-    try {
-      const data = await listTools();
-      if (data.result && data.result.tools) {
-        setTools(data.result.tools);
-      } else {
-        console.error('Invalid tools response', data);
-      }
-    } catch (error) {
-      console.error('Failed to fetch tools:', error);
-    } finally {
-      setLoadingTools(false);
-      setShowTools(true);
-    }
-  };
-
-  const toggleToolsPanel = () => {
-    if (showTools) {
-      setShowTools(false);
-    } else {
-      fetchTools();
-    }
-  };
-
   // 过滤掉空的占位对话（标题为“新对话”且无消息）
   const validConversations = conversations.filter(
     conv => !(conv.title === '新对话' )
@@ -132,70 +91,15 @@ const Sidebar = ({
         flex flex-col
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        {/* 头部 - 增加帮助图标 */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700 relative">
+        {/* 头部 */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <h1 className="text-xl font-bold text-white flex items-center gap-2">
             <MessageSquare className="w-5 h-5 text-blue-400" />
             MCP数据检索分析
           </h1>
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={toggleToolsPanel}
-              className="text-gray-400 hover:text-white transition"
-              title="查看可用工具"
-            >
-              <HelpCircle className="w-5 h-5" />
-            </button>
-            <button onClick={toggle} className="lg:hidden text-gray-400 hover:text-white">
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* 工具列表浮动面板 */}
-          {showTools && (
-            <div 
-              ref={toolsPanelRef}
-              className="absolute top-full right-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-xl border border-gray-700 z-50 p-3 max-h-96 overflow-y-auto"
-            >
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-semibold text-gray-300">📦 可用工具</span>
-                <button 
-                  onClick={() => setShowTools(false)}
-                  className="text-gray-400 hover:text-white"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-              {loadingTools ? (
-                <div className="text-gray-400 text-sm py-2">加载中...</div>
-              ) : tools.length === 0 ? (
-                <div className="text-gray-400 text-sm py-2">暂无工具</div>
-              ) : (
-                tools.map((tool, idx) => (
-                  <div key={idx} className="mb-3 last:mb-0 border-b border-gray-700 last:border-0 pb-2 last:pb-0">
-                    <div className="text-sm font-medium text-blue-400">{tool.name}</div>
-                    <div className="text-xs text-gray-400 mt-0.5">{tool.description || '无描述'}</div>
-                    {tool.inputSchema && tool.inputSchema.properties && (
-                      <div className="mt-1">
-                        <span className="text-xs text-gray-500">参数：</span>
-                        {Object.keys(tool.inputSchema.properties).map(key => {
-                          const prop = tool.inputSchema.properties[key];
-                          return (
-                            <span key={key} className="text-xs text-gray-400 block ml-2">
-                              • <span className="text-yellow-300">{key}</span>
-                              {prop.type && <span className="text-gray-500"> ({prop.type})</span>}
-                              {prop.description && <span className="text-gray-500">: {prop.description}</span>}
-                              {tool.inputSchema.required?.includes(key) && <span className="text-red-400 text-xs"> *必填</span>}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                ))
-              )}
-            </div>
-          )}
+          <button onClick={toggle} className="lg:hidden text-gray-400 hover:text-white">
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         {/* 新建对话按钮 */}
@@ -206,7 +110,7 @@ const Sidebar = ({
           <MessageSquarePlus className="w-4 h-4" /> 开启新对话
         </button>
 
-        {/* 对话列表（保持不变） */}
+        {/* 对话列表 */}
         <nav className="flex-1 overflow-y-auto px-3 space-y-1">
           {validConversations.length === 0 ? (
             <div className="text-center text-gray-500 text-sm py-4">暂无对话</div>
